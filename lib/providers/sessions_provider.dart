@@ -49,10 +49,10 @@ class SessionsProvider with ChangeNotifier {
   SessionsProvider(AuthProvider authProvider) {
     this.authProvider = authProvider;
     print('here is token');
-    print(authProvider.token);
-    // this.apiService = ApiService(authProvider.token);
+    print(AuthProvider.token);
+    // this.apiService = ApiService(AuthProvider.token);
     this.apiService = ApiService(
-        authProvider.token, authProvider.id.toString(), authProvider.eventCode);
+        AuthProvider.token, authProvider.id.toString(), authProvider.eventCode);
   }
 
   Future<void> getSessions() async {

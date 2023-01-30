@@ -7,6 +7,7 @@ import 'package:sassy_mobile/app_theme.dart';
 import 'package:sassy_mobile/providers/auth_provider.dart';
 import 'package:sassy_mobile/providers/event_provider.dart';
 import 'package:sassy_mobile/providers/user_provider.dart';
+import 'package:sassy_mobile/screens/main_home/main_home.dart';
 import 'package:sassy_mobile/screens/select_event/select_event.dart';
 import 'package:sassy_mobile/screens/verification_code/components/num_input_field.dart';
 
@@ -41,18 +42,12 @@ class _VerificationCodeState extends State<VerificationCode> {
               children: [
                 Spacer(flex: 2),
                 Text('Verification Code',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(color: textColorWhite)),
+                    style: Theme.of(context).textTheme.titleLarge),
                 Spacer(flex: 1),
                 Text(
                     'Please enter the 6-digit verification code we sent to ' +
                         value.email,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: textColorGrey1)),
+                    style: Theme.of(context).textTheme.bodyMedium),
                 Spacer(flex: 2),
                 TextInputField(
                   validator: (value) {
@@ -68,10 +63,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                 Spacer(flex: 9),
                 Center(
                   child: Text('''Didn’t receive an OTP?''',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: textColorGrey1)),
+                      style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 Center(
                   child: GestureDetector(
@@ -90,7 +82,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                         : null,
                     child: Text('Resend OTP',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: textColorWhite,
+                            color: textColorMain,
                             decoration: TextDecoration.underline)),
                   ),
                 ),
@@ -110,91 +102,8 @@ class _VerificationCodeState extends State<VerificationCode> {
   }
 
   Future<void> submit() async {
-    print('go into veri code submit function');
-    final isValidForm = _formKey.currentState!.validate();
-    if (isValidForm) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          shape: StadiumBorder(),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: cardColorDark,
-          content: SizedBox(
-            height: 25,
-            child: SpinKitThreeBounce(
-              size: 13,
-              color: textColorWhite,
-            ),
-          ),
-          duration: Duration(seconds: 15),
-        ),
-      );
-      final AuthProvider provider =
-          Provider.of<AuthProvider>(context, listen: false);
-
-      await provider.loginStep2(
-          provider.email, verificationCodeController.text);
-      Map<String, dynamic> mapUserDetail = provider.mapUserDetail;
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          shape: StadiumBorder(),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: cardColorDark,
-          content: Text(mapUserDetail['message'],
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: textColorWhite)),
-          duration: Duration(seconds: 2),
-        ),
-      );
-
-      print('CHECK THIS');
-      print(mapUserDetail['message']);
-      if (mapUserDetail['message'] == 'Successfully logged in!') {
-        await Provider.of<EventProvider>(context, listen: false)
-            .getUserRegisteredEvents();
-        Navigator.pushNamed(context, SelectEventPage.routeName);
-      }
-    }
+    Navigator.pushNamed(context, MainHomePage.routeName);
   }
 
-  Future<void> resendOtp() async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        shape: StadiumBorder(),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: cardColorDark,
-        content: SizedBox(
-          height: 25,
-          child: SpinKitThreeBounce(
-            size: 13,
-            color: textColorWhite,
-          ),
-        ),
-        duration: Duration(seconds: 15),
-      ),
-    );
-    print('go into resend otp function');
-    final AuthProvider provider =
-        Provider.of<AuthProvider>(context, listen: false);
-    await provider.loginResendMFA(provider.email);
-    Map<String, dynamic> mapResendMFA = provider.mapResendMFA;
-    print(mapResendMFA['message']);
-    await Future.delayed(const Duration(seconds: 1));
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        shape: StadiumBorder(),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: cardColorDark,
-        content: Text(mapResendMFA['message'].toString(),
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: textColorWhite)),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
+  Future<void> resendOtp() async {}
 }

@@ -15,7 +15,7 @@ class AuthProvider extends ChangeNotifier {
 
   Map<String, dynamic> mapResendMFA = {};
 
-  String token = '';
+  static String token = '';
   String id = '';
   String eventCode = '';
 

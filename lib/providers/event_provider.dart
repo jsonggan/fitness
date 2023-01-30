@@ -19,9 +19,9 @@ class EventProvider with ChangeNotifier {
   EventProvider(AuthProvider authProvider) {
     this.authProvider = authProvider;
     print('here is token');
-    print(authProvider.token);
+    print(AuthProvider.token);
     this.apiService = ApiService(
-        authProvider.token, authProvider.id.toString(), authProvider.eventCode);
+        AuthProvider.token, authProvider.id.toString(), authProvider.eventCode);
 
     init();
   }

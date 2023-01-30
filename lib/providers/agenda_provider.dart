@@ -31,7 +31,7 @@ class AgendaProvider with ChangeNotifier {
     this.authProvider = authProvider;
     // this.apiService = ApiService(authProvider.token);
     this.apiService = ApiService(
-        authProvider.token, authProvider.id.toString(), authProvider.eventCode);
+        AuthProvider.token, authProvider.id.toString(), authProvider.eventCode);
   }
 
   Future<void> fetchAgendaData(String date, int trackNumber) async {

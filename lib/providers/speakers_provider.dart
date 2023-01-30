@@ -21,10 +21,10 @@ class SpeakersProvider with ChangeNotifier {
   SpeakersProvider(AuthProvider authProvider) {
     this.authProvider = authProvider;
     print('here is token');
-    print(authProvider.token);
-    // this.apiService = ApiService(authProvider.token);
+    print(AuthProvider.token);
+    // this.apiService = ApiService(AuthProvider.token);
     this.apiService = ApiService(
-        authProvider.token, authProvider.id.toString(), authProvider.eventCode);
+        AuthProvider.token, authProvider.id.toString(), authProvider.eventCode);
   }
 
   Future<void> getSpeakers() async {

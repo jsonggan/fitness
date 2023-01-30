@@ -14,8 +14,8 @@ class VerificationCodePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backGroundColorBlack,
-      appBar: CustomTopAppBarWhiteIcon(),
+      backgroundColor: backGroundColor,
+      appBar: CustomTopAppBar(),
       body: Container(
         child: VerificationCode(),
       ),
